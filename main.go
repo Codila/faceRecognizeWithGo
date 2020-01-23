@@ -19,17 +19,17 @@ var (
 )
 func main() { 
     webcam, err := gocv.VideoCaptureDevice(0)
+	// Tuning parameters for faster video processing
 	webcam.Set(gocv.VideoCaptureBufferSize, 10)
 	//webcam.Set(gocv.VideoCaptureFPS, 50)
-	//webcam.Set(gocv.VideoCaptureTriggerDelay, 0)
+	//webcam.Set(gocv.VideoCaptureTriggerDelay, 0)  
 	
 	
 	if err != nil{
-				log.Fatalf("unable to init webcam: %v", err)
+			log.Fatalf("unable to init webcam: %v", err)
 		}
 	
-		defer webcam.Close()
-	
+		defer webcam.Close()	
 
 		img := gocv.NewMat()
 		defer img.Close()
@@ -60,7 +60,7 @@ func main() {
 					}
 					imgFace.Close()
 					
-					faces, err := fbox.Check(bytes.NewReader(buf))
+					faces, err := fbox.Check(bytes.NewReader(buf)) // Check if the facebox has been pre trained for the encoded Face
 					if err != nil {
 							log.Printf("unable to check face : %v", err)
 							continue
@@ -68,13 +68,12 @@ func main() {
 					text := ""
 					
 					if len(faces) > 0 {
-							text = "Hello "+faces[0].Name 							
-					        speech.Speak(text + "Welcome to Digityser")
+							text = "Hello "+faces[0].Name 		// Get the facial name at initial index from pre-trained facebox statefiles			
+					        speech.Speak(text + "Welcome to Digityser") 
 					} else {
-					speech.Speak("Sorry i dont know you please mention your name")
+					speech.Speak("Sorry i dont know you please mention your name") // Greeting if the face not recognized
 					}
-					
-										
+					// Image border text display parameters tuning										
 					size := gocv.GetTextSize(text , gocv.FontHersheyPlain, 3, 2)
 					pt := image.Pt(r.Min.X + (r.Min.X / 2) - (size.X / 2), r.Min.Y -2)
 					gocv.PutText(&img, text, pt, gocv.FontHersheyPlain, 3, blue, 2)
