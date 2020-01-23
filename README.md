@@ -2,16 +2,15 @@
 Facial Images are live captured through the inbuilt webcam using Golang which are then sent to Facebox SDK. Using pre-trained Facebox state-files and text to speech library in Go, individual faces in the webcam frame are recognized and greeted with computer Voice. 
 
 Prerequisites:
--Go package
+     -Go package
+     -Docker latest version
 
-- Docker latest version
-
-  -OpenCV- 4.2.0
+     -OpenCV- 4.2.0
   
-   -GoCV – 0.22.0
+     -GoCV – 0.22.0
    
-    -Webcam
+     -Webcam
     
      -Facebox
      
-      -Text to Speech package
+     -Text to Speech package
